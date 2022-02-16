@@ -1,0 +1,7 @@
+Ceva asemanator ca la CA
+
+a) Faceti sa afiseze "If you want justice, ... "
+
+b) Faceti sa afiseze "Valar Morghulis .."
+
+c) Faceti sa apeleze functia hidden si sa afiseze "For the Watch!"

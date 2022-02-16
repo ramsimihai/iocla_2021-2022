@@ -1,0 +1,17 @@
+Suma este: 10500
+Suma de la pozitia 3000 la pozitia 5 este 9
+Introduceti prima pozitie: 1
+Introduceti a doua pozitie: 4
+Suma de la pozitia 1 la pozitia 4 este 900
+
+Suma este: 10500
+Suma de la pozitia 3000 la pozitia 5 este 9
+Introduceti prima pozitie: 5
+Introduceti a doua pozitie: 9
+Suma de la pozitia 5 la pozitia 9 este 3000
+
+Suma este: 10500
+Suma de la pozitia 3000 la pozitia 5 este 9
+Introduceti prima pozitie: 7
+Introduceti a doua pozitie: 12
+Suma de la pozitia 7 la pozitia 12 este 5000

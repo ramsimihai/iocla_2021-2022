@@ -1,0 +1,115 @@
+// Copyright 2021 - 2022 321CA Mihai Daniel Soare
+
+WARNING: i hate to use uppercase letters, but sometimes ill use them, bear with me :)
+
+Introduction to Computers Structure and Assembly Language
+
+Homework #2 Bijus memoryyyy
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**) What does the program?
+
+- it uses the checker to run 4 asm implementations of the following tasks: ROTP, AGES, COLUMNAR
+TRANSPOSITION CIPHER, CACHE LOAD SIMULATION which are mentioned below.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1) ROTP - Reversed One Time Pad
+
+- basically it has to iterates through 2 strings (plaintext & key) and makes a xor operation
+between the two of them
+- iterates from right in the plain text string and get a character
+- iterates from the left in the key string and get a character
+- xor the two characters and add it to the chiper text at the index of the character
+from the plain text 
+
+- i`ve learnt how to use the registers needed to be used to make operations on a byte variable
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+2) Ages
+
+- the program calculates the ages of every person got from a list of people by checking the
+difference between the birth date and the present date
+- adds all the ages in an array
+- the algorithm works this way:
+    *) checks the difference between present & birth year and get an estimative age
+        **) if the birth day is in the future returns 0
+    *) then goes by making the difference between months and checks if the birth month is in the
+    future and that means the person didnt make had a birthday party yet in this year
+    *) it goes the same for the birth day
+    *) adds in the array the age
+
+- i`ve learnt how to use the parameters from a struct in asm and also discovered what a variable
+looks like in asm
+
+**) becuase the checker is a c program and runs the same .o file, there was a little bug cause i
+didnt set the initial counter to zero after every test
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+3) Columnar Transposition Cipher
+
+- there is a haystack (a full text saw as a 2D array) and a key (which is actually an array
+of indexes of which column from the haystack is going to be taken first and be added in the
+cipher text)
+
+- there are 2 iterations: one through the columns of the haystack in function of what order index
+we get from the key array and one through the lines of the haystack and add every character from
+the specified column in the cipher text
+
+- the algorithm works exactly how was mentioned, it iterates through the columns by position
+a register on the first line of the haystack for the specified order-indexed column and then
+iterates through every line of the haystack to get every character on that column
+
+- get the index of the cipher text on a new position where characters can be added and start
+again the iteration
+
+- the hard part was to check if there is any character on the last line of the haystack
+- also found out how to move on a specified position for a register without a formula (using
+only helper registers) 
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+4) Cache Load Simulation
+
+- the program starts by getting the offset & tag of an address given
+- iterates through the array of tags and then verify if the given tag exists or not:
+    EXISTS -> CACHE_HIT
+    DOESNT EXIST -> CACHE_MISS
+
+__CACHE_MISS__
+
+- gets to the to_replace index position in the array of tags
+- add the tag on that position then add to cache
+
+    __add_to_cache__
+    - iterates through lines and get to the index to_replace in the cache
+    - adds the value found at the network address (the first address subnetted from the
+    given address) till the the broadcast address (the last possible address) for 3 subnetwork
+    bytes // yea i know RL or smth //
+    - makes the index of where to find the value of the network addres added with
+    the offset in to to_replace (index = to_replace)
+    - then goes to the CACHE_HIT part where is the same for both cases
+
+__CACHE_HIT__
+
+- the tag is found (exists or have been added) and the index of where to find in cache
+the value of the offset position is known
+- iterates through cache to find the value of address + offset
+- puts it in the wanted register
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*) Feedback
+
+- if i did the last task before the others it would be so much easier to implement the other ones
+- it was a pretty ok homework, done in not so much time, i just had to get more knowledge about
+concepts because the laboratories curriculum werent too explained (i mean there is no explanation)
+to solutions before doing it so it was really harder to implement some of this tasks)
+- thanks for letting us have more free time cause i couldnt finish this homework if that didnt
+happened
+- how i'm feeling after finishing this homework: https://www.youtube.com/watch?v=9GlKcBbYpVk
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
