@@ -1,0 +1,238 @@
+// Copyright 2021 - 2022 321CA Mihai Daniel Soare
+
+WARNING: i hate to use uppercase letters, but sometimes ill use them, bear with me :)
+
+Introduction to Computers Structure and Assembly Language
+
+Homework #3 Bijus de_inferno
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+**) What does the program?
+
+- it uses the checker to run 4 asm implementations of the following tasks & some bonuses
+(didnt really had time for that too):
+1) albums' sorting
+2) turing's nightmare -> lcm & parentheses
+3) words' sorting
+4) banking accounts
+5) bonus_cpuid
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+1) Albums' sorting
+
+- the program gets as input number of nodes and a linked list put in an array
+- the output is represented of the head of the linked list with all the nodes
+sorted by value in ascending order
+
+- the idea of the algorithm of sorting these nodes is not that hard to understand
+& behind is a selection sort on steroids:
+    (1)
+    -> iterates through the array and get the node that has the lowest value
+    out of the nodes
+    -> adds it to the stack and saves it for the final of the program;
+    (!!)
+    -> now the interesting part comes, to use 2 iterators for this algorithm
+    i used the stack to save them, in a special way: head, iterator through nodes,
+    old minimum & second iterator to get the minimum
+    (2)
+    -> iterates through the nodes
+        *) if no other minimum was added just adds the head of the list
+    -> initialize the first minimum value as the first node of the stack
+    (3)
+    -> then iterates through the nodes
+    -> compares every node with the minimum value and with the old minimum
+    so if the minimum value was already found it wont put it again on the list
+    -> connects the node found with minim value to the oldest minimum in the list
+    -> updates the old minimum on the stack
+    -> then just repeats
+    (4)
+    -> retrieves the head of the list from the stack and returns it
+
+    **) the hard part was to know the order of the values pushed on stacks and what the hell
+    you do with them, first time i pushed them in a wrong order and didnt have enough registers
+    to play with.
+
+    - i've learnt how to iterate through a struct and push iterators on stack
+                        ;really interesting task, ngl;
+                        -----------------------------
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+2) Turing's nightmare
+
+A. LCM (least common multiple)
+- the program calculates the least common multiple of 2 numbers by:
+- calculating the greatest common divisor of the two numbers 
+- just makes the division of the multiplication of the two numbers and the gcd 
+
+- i've learnt how to change mov, enter & leave with push & pop (yuhuu)
+B. Well-closed parentheses
+
+The program does the following:
+- gets a string and the string length;
+- evaluates if the string has balanced parentheses
+The program does that by:
+- initialize a barrier on the stack, to check when the stack "is empty"
+- iterates through the string:
+    -> if the characters is '(' adds it on the stack
+    -> if the stack is empty mid-while returns error
+    -> if the character is ')' but the top element from the stack
+    is not '(' (the matching parantheses) returns error
+    otherwise just pop the parantheses of the stack
+- at the final checks:
+    -> if the stack is empty, if not returns 0
+    -> checks if the error is 1 or not
+
+- i've learnt how to use an empty stack by using a "barrier"
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+3) Words' sorting
+
+- the program starts by getting a large string that contains words that needs to be
+extracted from the string and the words are going to be sorted lexicographic with qsort
+
+`get_words`
+
+- starts by deleting all the delimiters mentioned from the given string and be replaced
+with '\0' so every new word has an end delimiter
+
+(!!)
+- saves on stack a word iterator (to know on what position in the array the new word
+will be added)
+- saves on stack a character iterator (to know when a word ended)
+
+The algorithm to add every word in the array of words works like this:
+    -> iterates through the array of words
+        -> iterates through every character of the old string
+            -> if the character is the first character from a word, the word is going to be
+            added in the array of words
+            -> then the rest of the characters will be ignored
+        -> increments the array counter
+    -> basically just repeats
+
+`sort`
+
+This contains a call of qsort function from standard C library with my implementation
+of comparing two strings.
+
+`compare_strings`
+
+- saves the values from the old registers from the sort function
+- calculates string str1 & str2 length by calling strlen function from libc
+- compares them:
+    -> if they are the same length: calls strcmp function from libc
+
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+4) Banking accounts
+
+This program evaluates a string that contains a mathematical expression and calculates its value.
+for example: "(1+33*(7+0))"
+
+- an expression evaluates term + term | term - term
+- a term evaluates factor * factor | factor / factor
+- a factor evaluates (expression) | number
+
+`expression`(char *p, int *i)
+
+-> p - is string || i - is index used to know where to be located in the string
+
+(!!) only knows how to add terms or subtract terms
+
+- would call term for the first number cause it doesnt have a "+" or "-" as character
+- saves the sum on stack
+- iterates through the given string with an iterator by checking if the character is "+" or "-"
+then just calls term for the termen that can be a term / factor / number / expression
+- always increase the iterator so the character checked would be the correct one
+- the expression will get the answer of the termen and would only know how to add it or subtract
+from the sum
+
+`term`(char *p, int *i)
+
+(!!) only know how to multiply or divide factors
+
+- basically, the same implementation but instead of "+", "-", there is "*", "/"
+- now the factors are multiplied or divided, and the result is stored
+
+`factor`(char *p, int *i)
+
+- the actual big boy of the program
+- factor knows if he got a new expression to be evaluated (expression) because of the parantheses
+and it knows how to calculate the value of characters that represent a number (pretty cool, right?)
+
+The algorithm works like this:
+
+- starts iterating through the string:
+    -> finds a character (> '0' and < '9')
+    -> finds a '('
+
+A.
+- finding a character means that there is a number, so it would recreate the number by iterating
+through the string till a parantheses is found or another sign
+- multiply every digit with 10 ^ power and from every character is subtracted '0'
+to get the actual value of the digit
+- adds it to the result and at the end returns it 
+
+B.
+- finding a '(' means a new expression would be evaluated
+- firstly, the string gets over the '('
+- evaluates properly the expression
+- gets over the ')' that is the complementary of the first '('
+- returns the value of the expression
+
+All of these function calls each other and they are just calculating their job.
+For example, calculating expression, getting to terms, getting to factors and goes so until
+the end of the string.
+
+- sincerely, this task was all about wrinting code in C. i get your good intentions, but didnt
+really made me get to know more iocla, more like made me to get an implementation in C...
+- reconsider changing this task next year, actually next semester (o_o)
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+5) Bonus cpuid
+
+This program gets information about cpu using cpuid.
+
+`cpu_manufact_id`
+
+- sets eax on 0, that way the details about the vendor id can be extracted
+- by using cpuid, the information are stored in ebx, edx, ecx and i just put them into the given
+string
+
+`features`
+
+- set by default that every feature flag is unavailable (bit is 0)
+
+- sets eax on 1
+- checks every feature flag if they are available
+    -> the information about the features flags are stored in ecx on specified bits
+    -> vmx is stored on bit 5, avx on bit 28, and rdrand on bit 30
+- to check if one of them is permitted, i created a mask with every option specified bit
+- made and on the information register with the created mask
+- just shifted back to right with the corresponding bits
+- if that bit is 1, the flag is permitted
+
+
+`l2_cache_info`
+
+- sets eax = 80000006h, to get extended l2 cache features
+- the information is stored in ecx register
+- the rest is mistery, got it from wikipedia - tee-hee \(`-`)/
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+*) Feedback
+
+- feels like ~30 hours on this homework, but in over 5-6 days, so yeah. its fine.
+- really nice homework, congrats cristi for it.
+- the task 4 was useless in my preparation for iocla and i really had to spend too much time on
+it just because of my ego.
+- learnt a lot of new things and i pointed them out individually per task.
+- us with the systems team: https://www.youtube.com/watch?v=PQ5361D0zj4
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
